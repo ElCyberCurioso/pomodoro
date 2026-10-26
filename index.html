@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es" data-scheme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Pomodoro</title>
+  <meta name="description" content="Temporizador Pomodoro con música de YouTube de fondo, tareas y estadísticas. Personalizable y sin registro.">
+  <meta name="theme-color" content="#1F3B33">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta property="og:title" content="Pomodoro">
+  <meta property="og:description" content="Temporizador Pomodoro con música de YouTube de fondo.">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" id="favicon">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="stylesheet" data-font="Hanken+Grotesk:wght@400;500;600" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" data-font="Fraunces:opsz,wght,SOFT@9..144,200..600,0..100" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,200..600,0..100&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="config.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body data-phase="focus" data-status="idle">
+  <!-- Iconos -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 6.3v11.4c0 .8.9 1.3 1.6.9l9.2-5.7c.6-.4.6-1.3 0-1.7l-9.2-5.8c-.7-.4-1.6.1-1.6.9z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5.5" width="3.8" height="13" rx="1.3" fill="currentColor" stroke="none"/><rect x="13.7" y="5.5" width="3.8" height="13" rx="1.3" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="M6 7.2v9.6c0 .8.9 1.3 1.6.8l7-4.8c.6-.4.6-1.2 0-1.6l-7-4.8c-.7-.5-1.6 0-1.6.8z" fill="currentColor" stroke="none"/><rect x="16.2" y="6" width="2.3" height="12" rx="1.1" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M18 7.2v9.6c0 .8-.9 1.3-1.6.8l-7-4.8c-.6-.4-.6-1.2 0-1.6l7-4.8c.7-.5 1.6 0 1.6.8z" fill="currentColor" stroke="none"/><rect x="5.5" y="6" width="2.3" height="12" rx="1.1" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-skip" viewBox="0 0 24 24"><path d="M5.5 7l5 5-5 5M12.5 7l5 5-5 5"/></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5v5h3.4l4.6 4V5.5l-4.6 4z"/><path d="M15.5 9.2a4 4 0 0 1 0 5.6M18.2 6.6a7.6 7.6 0 0 1 0 10.8"/></symbol>
+      <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5v5h3.4l4.6 4V5.5l-4.6 4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></symbol>
+      <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 17.5V6.2l10-2v11"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.2" r="2.5"/></symbol>
+      <symbol id="i-tasks" viewBox="0 0 24 24"><path d="M4 6.5l1.6 1.5L8.5 5M4 12.5l1.6 1.5 2.9-3M4 18.5l1.6 1.5 2.9-3M12 7h8M12 13h8M12 19h8"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5.5 19.5v-7M12 19.5v-14M18.5 19.5v-9.5"/></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9.5M18.5 7H20M4 17h3.5M12.5 17H20"/><circle cx="16" cy="7" r="2.4"/><circle cx="10" cy="17" r="2.4"/></symbol>
+      <symbol id="i-expand" viewBox="0 0 24 24"><path d="M14.5 4.5h5v5M9.5 19.5h-5v-5M19.5 4.5l-6 6M4.5 19.5l6-6"/></symbol>
+      <symbol id="i-shrink" viewBox="0 0 24 24"><path d="M13.5 5.5v5h5M10.5 18.5v-5h-5M13.5 10.5l6-6M10.5 13.5l-6 6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5.5 12h13"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V5.2c0-.4.3-.7.7-.7h3.6c.4 0 .7.3.7.7V7M6.5 7l.9 11.6c.1.8.7 1.4 1.5 1.4h6.2c.8 0 1.4-.6 1.5-1.4L17.5 7"/></symbol>
+      <symbol id="i-grip" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><circle cx="9" cy="6.5" r="1.4"/><circle cx="15" cy="6.5" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="9" cy="17.5" r="1.4"/><circle cx="15" cy="17.5" r="1.4"/></g></symbol>
+      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M4 7.5h2.8c1.9 0 3 .9 4.2 2.7l2 3.1c1.2 1.8 2.3 2.7 4.2 2.7H20M4 16h2.8c1.4 0 2.4-.5 3.3-1.5M13.9 9c.9-1 1.9-1.5 3.3-1.5H20M17.5 5l2.5 2.5-2.5 2.5M17.5 13.5L20 16l-2.5 2.5"/></symbol>
+      <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M5 11.5V10a3 3 0 0 1 3-3h11.5M16.5 4l3 3-3 3M19 12.5V14a3 3 0 0 1-3 3H4.5M7.5 20l-3-3 3-3"/></symbol>
+      <symbol id="i-pip" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.2"/><rect x="11.5" y="11.2" width="6.5" height="5.3" rx="1.1" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-backdrop" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.2"/><circle cx="9" cy="9.5" r="1.6"/><path d="M20.2 15.2l-4.7-4.7-9.7 9.2"/></symbol>
+      <symbol id="i-window" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.2"/><rect x="6.5" y="11" width="7" height="5.5" rx="1" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4.5v10.5M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4.5M7.5 9L12 4.5 16.5 9M5 19.5h14"/></symbol>
+      <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2.8" y="6" width="18.4" height="12" rx="2.2"/><path d="M7 10h.01M10.5 10h.01M14 10h.01M17.5 10h.01M8 14h8"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4.5h5.5V10M19.5 4.5L11 13M18 14.5v3.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 5 18V8a1.5 1.5 0 0 1 1.5-1.5H10"/></symbol>
+      <symbol id="i-focus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M4.5 8.5v-2a2 2 0 0 1 2-2h2M15.5 4.5h2a2 2 0 0 1 2 2v2M19.5 15.5v2a2 2 0 0 1-2 2h-2M8.5 19.5h-2a2 2 0 0 1-2-2v-2"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.2"/><circle cx="9" cy="9.5" r="1.6"/><path d="M20.2 15.2l-4.7-4.7-9.7 9.2"/></symbol>
+      <symbol id="i-mark" viewBox="0 0 24 24"><circle cx="12" cy="13.6" r="7.4"/><path d="M12 6.2c0-1.6.8-2.8 2.4-3.2M8.6 6.9c1.2.7 2.3.8 3.4.2 1.1.6 2.2.5 3.4-.2"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Fondo: imagen, vídeo y capa de color de la fase -->
+  <div class="backdrop-image" id="backdropImage" aria-hidden="true"></div>
+  <div class="video-stage is-empty" id="videoStage" data-layout="background" data-corner="left" data-size="small">
+    <div class="video-media">
+      <div class="video-poster" id="videoPoster"></div>
+      <div class="video-frame"><div id="ytPlayer"></div></div>
+    </div>
+    <div class="window-chrome">
+      <button class="window-play" id="windowPlay" type="button" aria-label="Reproducir música">
+        <svg class="icon"><use href="#i-play"/></svg>
+      </button>
+      <div class="window-actions">
+        <a class="icon-btn small" id="windowOpen" href="#" target="_blank" rel="noopener" aria-label="Abrir en YouTube" title="Abrir en YouTube"><svg class="icon"><use href="#i-external"/></svg></a>
+        <button class="icon-btn small" id="windowToBackdrop" type="button" aria-label="Poner el vídeo de fondo" title="Poner el vídeo de fondo"><svg class="icon"><use href="#i-backdrop"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="shade" aria-hidden="true"></div>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="icon brand-mark"><use href="#i-mark"/></svg>
+        <span class="brand-name" id="brandName">Pomodoro</span>
+      </div>
+      <nav class="top-actions" aria-label="Paneles">
+        <button class="icon-btn" type="button" data-open="tasks" aria-label="Tareas" title="Tareas (T)"><svg class="icon"><use href="#i-tasks"/></svg></button>
+        <button class="icon-btn" type="button" data-open="music" aria-label="Música" title="Música (Y)"><svg class="icon"><use href="#i-music"/></svg></button>
+        <button class="icon-btn" type="button" data-open="stats" aria-label="Estadísticas" title="Estadísticas (E)"><svg class="icon"><use href="#i-chart"/></svg></button>
+        <button class="icon-btn" type="button" data-open="settings" aria-label="Ajustes" title="Ajustes (,)"><svg class="icon"><use href="#i-sliders"/></svg></button>
+        <span class="divider" aria-hidden="true"></span>
+        <button class="icon-btn" type="button" id="pipBtn" aria-label="Temporizador flotante" title="Temporizador flotante" hidden><svg class="icon"><use href="#i-pip"/></svg></button>
+        <button class="icon-btn" type="button" id="zenBtn" aria-label="Modo sin distracciones" title="Modo sin distracciones (Z)"><svg class="icon"><use href="#i-focus"/></svg></button>
+        <button class="icon-btn" type="button" id="fullscreenBtn" aria-label="Pantalla completa" title="Pantalla completa (F)"><svg class="icon"><use href="#i-expand"/></svg></button>
+      </nav>
+    </header>
+
+    <main class="stage">
+      <div class="modes" role="tablist" aria-label="Fase">
+        <button class="mode" role="tab" type="button" data-mode="focus" aria-selected="true">Concentración</button>
+        <button class="mode" role="tab" type="button" data-mode="short" aria-selected="false">Pausa corta</button>
+        <button class="mode" role="tab" type="button" data-mode="long" aria-selected="false">Pausa larga</button>
+      </div>
+
+      <div class="clock" id="clock" data-style="classic">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="ring-track" cx="100" cy="100" r="96"/>
+          <circle class="ring-fill" id="ringFill" cx="100" cy="100" r="96" pathLength="1000"/>
+        </svg>
+        <div class="time" id="time" role="timer" aria-live="off">25:00</div>
+      </div>
+
+      <div class="progress" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="meta">
+        <ol class="cycle" id="cycle" aria-label="Pomodoros de la serie"></ol>
+        <button class="task-pill" type="button" id="taskPill" data-open="tasks">
+          <span class="task-pill-title" id="taskPillTitle">Elige una tarea</span>
+          <span class="task-pill-count" id="taskPillCount"></span>
+        </button>
+      </div>
+
+      <div class="controls">
+        <button class="round-btn" type="button" id="resetBtn" aria-label="Reiniciar" title="Reiniciar (R)"><svg class="icon"><use href="#i-reset"/></svg></button>
+        <button class="primary-btn" type="button" id="startBtn"><span id="startLabel">Empezar</span></button>
+        <button class="round-btn" type="button" id="skipBtn" aria-label="Saltar a la siguiente fase" title="Saltar fase (S)"><svg class="icon"><use href="#i-skip"/></svg></button>
+      </div>
+    </main>
+
+    <footer class="dock" id="dock" aria-label="Reproductor de música">
+      <button class="track" type="button" id="dockTrack" data-open="music" aria-label="Abrir la lista de música">
+        <span class="track-thumb" id="dockThumb"></span>
+        <span class="track-text">
+          <span class="track-title" id="dockTitle">Sin música</span>
+          <span class="track-sub" id="dockSub">Añade vídeos de YouTube</span>
+        </span>
+      </button>
+      <div class="transport">
+        <button class="icon-btn" type="button" id="prevBtn" aria-label="Anterior"><svg class="icon"><use href="#i-prev"/></svg></button>
+        <button class="play-btn" type="button" id="playBtn" aria-label="Reproducir música (K)"><svg class="icon"><use href="#i-play"/></svg></button>
+        <button class="icon-btn" type="button" id="nextBtn" aria-label="Siguiente (N)"><svg class="icon"><use href="#i-next"/></svg></button>
+      </div>
+      <div class="dock-tools">
+        <button class="icon-btn" type="button" id="muteBtn" aria-label="Silenciar música (M)" title="Silenciar (M)"><svg class="icon"><use href="#i-volume"/></svg></button>
+        <input class="range volume" type="range" id="volume" min="0" max="100" step="1" value="60" aria-label="Volumen de la música">
+        <button class="icon-btn" type="button" id="layoutBtn" aria-label="Mostrar el vídeo en una ventana" title="Vídeo de fondo o en ventana (V)"><svg class="icon"><use href="#i-window"/></svg></button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Paneles laterales -->
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+  <section class="sheet" id="sheet-music" aria-labelledby="music-title" inert>
+    <header class="sheet-head">
+      <h2 id="music-title">Música</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Cerrar"><svg class="icon"><use href="#i-close"/></svg></button>
+    </header>
+    <div class="sheet-body">
+      <div class="list-tabs" id="listTabs" role="tablist" aria-label="Tus listas"></div>
+      <div class="list-head">
+        <input class="list-name" id="listName" maxlength="60" aria-label="Nombre de la lista" spellcheck="false">
+        <button class="icon-btn small" type="button" id="shareList" aria-label="Copiar enlace para compartir la lista" title="Copiar enlace para compartir"><svg class="icon"><use href="#i-link"/></svg></button>
+        <button class="icon-btn small" type="button" id="deleteList" aria-label="Eliminar la lista" title="Eliminar la lista"><svg class="icon"><use href="#i-trash"/></svg></button>
+      </div>
+      <form class="add-form" id="addForm" autocomplete="off">
+        <input class="input" id="addInput" type="text" inputmode="url" placeholder="Pega un enlace de YouTube" aria-label="Enlace o ID de YouTube">
+        <button class="btn" type="submit">Añadir</button>
+      </form>
+      <p class="hint">Vídeos, directos y listas de reproducción. Si el enlace incluye <code>list=</code>, se añade la lista completa.</p>
+      <ul class="tracks" id="trackList"></ul>
+      <div class="playback-row">
+        <button class="chip-toggle" type="button" id="shuffleBtn" aria-pressed="false"><svg class="icon"><use href="#i-shuffle"/></svg><span>Aleatorio</span></button>
+        <button class="chip-toggle" type="button" id="repeatBtn" aria-pressed="true"><svg class="icon"><use href="#i-repeat"/></svg><span id="repeatLabel">Repetir lista</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-tasks" aria-labelledby="tasks-title" inert>
+    <header class="sheet-head">
+      <h2 id="tasks-title">Tareas</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Cerrar"><svg class="icon"><use href="#i-close"/></svg></button>
+    </header>
+    <div class="sheet-body">
+      <form class="task-form" id="taskForm" autocomplete="off">
+        <input class="input" id="taskInput" type="text" maxlength="140" placeholder="¿En qué vas a trabajar?" aria-label="Nueva tarea">
+        <div class="task-form-row">
+          <label class="est-label" for="taskEst">Pomodoros estimados</label>
+          <div class="stepper" data-stepper>
+            <button type="button" class="stepper-btn" data-step="-1" aria-label="Menos"><svg class="icon"><use href="#i-minus"/></svg></button>
+            <input type="number" id="taskEst" value="1" min="1" max="20" inputmode="numeric">
+            <button type="button" class="stepper-btn" data-step="1" aria-label="Más"><svg class="icon"><use href="#i-plus"/></svg></button>
+          </div>
+          <button class="btn" type="submit">Añadir</button>
+        </div>
+      </form>
+      <ul class="task-list" id="taskList"></ul>
+      <div class="task-summary" id="taskSummary"></div>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet-stats" aria-labelledby="stats-title" inert>
+    <header class="sheet-head">
+      <h2 id="stats-title">Estadísticas</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Cerrar"><svg class="icon"><use href="#i-close"/></svg></button>
+    </header>
+    <div class="sheet-body" id="statsBody"></div>
+  </section>
+
+  <section class="sheet sheet-wide" id="sheet-settings" aria-labelledby="settings-title" inert>
+    <header class="sheet-head">
+      <h2 id="settings-title">Ajustes</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Cerrar"><svg class="icon"><use href="#i-close"/></svg></button>
+    </header>
+    <nav class="settings-nav" id="settingsNav" aria-label="Secciones de ajustes"></nav>
+    <div class="sheet-body" id="settingsBody"></div>
+  </section>
+
+  <dialog class="dialog" id="dialog">
+    <form method="dialog">
+      <h3 class="dialog-title" id="dialogTitle"></h3>
+      <p class="dialog-text" id="dialogText"></p>
+      <div class="dialog-actions">
+        <button class="btn ghost" value="cancel" id="dialogCancel">Cancelar</button>
+        <button class="btn" value="ok" id="dialogOk">Aceptar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div class="sr-only" id="announcer" aria-live="assertive"></div>
+  <noscript><p class="noscript">Esta app necesita JavaScript para funcionar.</p></noscript>
+</body>
+</html>
